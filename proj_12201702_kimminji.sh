@@ -34,6 +34,8 @@ while true; do
 		then
 			cat "$players" | awk -F',' '$1~"Heung-Min Son"{print "Team:"$4", Appearance:"$6", Goal:"$7", Assist:"$8}'
 			# Using awk to find "Heung-Min Son" and print his data
+		else
+			echo "Undo your choice."
 		fi
 		;;
         2)
@@ -47,6 +49,8 @@ while true; do
 		then
 			echo -e "***Top-3 Attendance Match***\n"
 			cat "$matches" | sort -r -t',' -n -k 2 | head -n 3 | awk -F',' '{print $3" vs "$4" ("$1")\n"$2" "$7"\n"}'
+		else
+                        echo "Undo your choice."
 		fi
 		# When sorting, use the option '-t' to set the separator and '-n' to recognize fields as number
 		# Cutting line and using awk for print
@@ -75,14 +79,20 @@ while true; do
 				echo ""
 			done
 
+		else
+                        echo "Undo your choice."
 		fi
 		;;
         5)
 		read -p "Do you want too modity the format of date? (y/n) : " yn
 		if [ "$yn" = "y" ]
 		then
-			cat "$matches" | cut -d',' -f1 | head -n 11 | tail -n +2 | sed -E -e 's/([A-Za-z]{3}) ([0-9]{2}) ([0-9]{4}) - /\3\/\1\/\2 /' | sed -E -e 's/Jan/01/; s/Feb/02/; s/Mar/03/; s/Aug/08/'
+			cat "$matches" | cut -d',' -f1 | head -n 11 | tail -n +2 | sed -E -e 's/([A-Za-z]{3}) ([0-9]{2}) ([0-9]{4}) - /\3\/\1\/\2 /' | sed -E -e 's/Jan/01/; s/Feb/02/; s/Mar/03/; s/Apr/04/; s/May/05/; s/Jun/06/; s/Jul/07/; s/Aug/08/'
+		else
+                        echo "Undo your choice."
 		fi
+		# Cut the 'matches.csv' to print only 10 lines without fields name
+		# Then use the 'sed' command to format the line to 'yyyy/mmm/dd' and replacing 'mmm' to 'mm'
 		;;
         6)
 		cat "$teams" | tail -n 20 | awk -F',' '{print NR") "$1}' # Print team name
